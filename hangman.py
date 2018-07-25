@@ -119,7 +119,7 @@ def get_guessed_word(secret_word, letters_guessed):
     return user_word
 
 
-print get_guessed_word('apple',['g','n','l','e'])
+#print get_guessed_word('apple',['g','n','l','e'])
 
 def get_available_letters(letters_guessed):
     '''
@@ -128,8 +128,12 @@ def get_available_letters(letters_guessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    alphabet = list(string.ascii_lowercase)
 
+    for char in letters_guessed:
+        alphabet.remove(char)
+    return alphabet
+print get_available_letters(['a','b','m'])
 
 
 def hangman(secret_word):
