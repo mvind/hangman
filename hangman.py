@@ -67,13 +67,13 @@ def is_word_guessed(secret_word, letters_guessed):
         char = word_check[i]
         print 'Checking: ' + char
 
-        for j in xrange(0,len(letters_guessed)):
-            if (str(char) == str(letters_guessed[j])):
+        for j in letters_guessed:
+            if (str(char) == j):
                 print 'match', char
                 break
             else:
                 print 'Not a match'
-                if int(j) == len(letters_guessed)-1:
+                if j == letters_guessed[len(letters_guessed)-1]:
                     mistake_found = True
                     break
                 else:
@@ -90,8 +90,8 @@ def is_word_guessed(secret_word, letters_guessed):
             continue
 
 #print is_word_guessed('morten','netom')
-#print is_word_guessed('apple','apel')
-
+print is_word_guessed('apple',['a','e','l','p'])
+print ['a','e','l','p']
 
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -102,7 +102,7 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+
 
 
 
