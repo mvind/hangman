@@ -90,8 +90,8 @@ def is_word_guessed(secret_word, letters_guessed):
             continue
 
 #print is_word_guessed('morten','netom')
-print is_word_guessed('apple',['a','e','l','p'])
-print ['a','e','l','p']
+# print is_word_guessed('apple',['a','e','l','p'])
+# print ['a','e','l','p']
 
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -102,9 +102,24 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
+    user_word = ''
+    for i in secret_word:
+
+        print i
+        for j in letters_guessed:
+            if j == i:
+                user_word = user_word+j
+                print 'match', user_word
+                break
+            else:
+                if j == letters_guessed[len(letters_guessed)-1]:
+                    user_word = user_word+'_'
+                else:
+                    continue
+    return user_word
 
 
-
+print get_guessed_word('apple',['g','n','l','e'])
 
 def get_available_letters(letters_guessed):
     '''
