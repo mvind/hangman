@@ -11,7 +11,7 @@
 # (so be sure to read the docstrings!)
 import random
 import string
-import re
+
 WORDLIST_FILENAME = "words.txt"
 
 
@@ -270,6 +270,9 @@ def match_with_gaps(my_word, other_word):
             pos[i][0]
             pos[i][1]
 
+            if not pos[i][0]:
+                return False
+
             for j in pos[i][0]:
                 if other_word[j] == my_word[j]:
                     print(my_word[j], pos[i][1], 'match!')
@@ -285,7 +288,7 @@ def match_with_gaps(my_word, other_word):
 
 #print(match_with_gaps('m_vt','move'))
 #print(match_with_gaps('te_t','tact'))
-print(match_with_gaps('t_c_','tact'))
+#print(match_with_gaps('t__t','talk'))
 
 def show_possible_matches(my_word):
     '''
@@ -298,9 +301,21 @@ def show_possible_matches(my_word):
 
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    length = len(my_word)
+    matches = []
+    for w in wordlist:
+        if len(w) != length:
+            continue
+        else:
+            if match_with_gaps(my_word, w) == True:
+                matches.append(w)
+            else:
+                continue
+    print(matches)
 
 
+
+#show_possible_matches('t__t')
 
 def hangman_with_hints(secret_word):
     '''
