@@ -255,32 +255,58 @@ def match_with_gaps(my_word, other_word):
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     if len(my_word) == len(other_word): #Only check words of same length
+
         #Get unique characters from my word
-        unique_chars = ''.join(set(my_word)).replace('_','')
+        unique_my_word = ''.join(set(my_word)).replace('_','')
+        unique_other_word = ''.join(set(other_word))
+        #Get position for the characters from my word
+        unique_pos = []
+        for char in unique_my_word:
+            unique_pos.append([[pos for pos, c in enumerate(my_word) if char == c],char])
+        print(unique_pos, '\n')
 
-        #get position for each char in the control word
-        pos = []
-        for char in unique_chars:
-            pos.append([[pos for pos, c in enumerate(other_word) if char == c],char])
-        print(pos)
+        guide_pos = []
+        for char in unique_other_word:
+            guide_pos.append([[pos for pos, c in enumerate(other_word) if char == c],char])
 
-        #check postion with the secret word
-        for i in range(0, len(unique_chars)):
-            # POS = [[pos], char]
-            pos[i][0]
-            pos[i][1]
+        print(guide_pos)
 
-            if not pos[i][0]:
-                return False
+        for i in range(len(unique_pos)):
+            pointer =unique_pos[i][1]
 
-            for j in pos[i][0]:
-                if other_word[j] == my_word[j]:
-                    print(my_word[j], pos[i][1], 'match!')
-                else:
-                    print(my_word[j], pos[i][1], 'Not a match')
-                    return False
-
+            for j in range(len(guide_pos)):
+                if pointer == guide_pos[j][1]:
+                    #print("Found you")
+                    #Check position arrays match over
+                    if unique_pos[i][0] == guide_pos[j][0]:
+                        #print('Match')
+                        continue
+                    else:
+                        #print('Not a match')
+                        return False
+                else: #Means that the words dont match over i.e there some character different
+                    if pointer in other_word:
+                        continue
+                    else:
+                        return False
         return True
+
+
+
+        #Check other_word if the positions line up
+        # for i in range(len(unique_chars)):
+        #     char_positions = pos[i][0] #
+        #
+        #     for j in char_positions:
+        #         if my_word[j] == '_':
+        #             continue
+        #         elif my_word[j] == other_word[j]:
+        #             print('Match')
+        #         elif my_word[j] != other_word[j]:
+        #             print('Not a match for: ', other_word[j])
+        #             return False
+        # return True
+
 
     else:
         return False
@@ -288,7 +314,7 @@ def match_with_gaps(my_word, other_word):
 
 #print(match_with_gaps('m_vt','move'))
 #print(match_with_gaps('te_t','tact'))
-#print(match_with_gaps('t__t','talk'))
+#print(match_with_gaps('t__t','tact'))
 
 def show_possible_matches(my_word):
     '''
@@ -315,7 +341,7 @@ def show_possible_matches(my_word):
 
 
 
-#show_possible_matches('t__t')
+show_possible_matches('a_pl_')
 
 def hangman_with_hints(secret_word):
     '''
