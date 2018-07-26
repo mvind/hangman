@@ -11,6 +11,7 @@
 # (so be sure to read the docstrings!)
 import random
 import string
+import re
 WORDLIST_FILENAME = "words.txt"
 
 
@@ -253,9 +254,38 @@ def match_with_gaps(my_word, other_word):
         False otherwise:
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    if len(my_word) == len(other_word): #Only check words of same length
+        #Get unique characters from my word
+        unique_chars = ''.join(set(my_word)).replace('_','')
+
+        #get position for each char in the control word
+        pos = []
+        for char in unique_chars:
+            pos.append([[pos for pos, c in enumerate(other_word) if char == c],char])
+        print(pos)
+
+        #check postion with the secret word
+        for i in range(0, len(unique_chars)):
+            # POS = [[pos], char]
+            pos[i][0]
+            pos[i][1]
+
+            for j in pos[i][0]:
+                if other_word[j] == my_word[j]:
+                    print(my_word[j], pos[i][1], 'match!')
+                else:
+                    print(my_word[j], pos[i][1], 'Not a match')
+                    return False
+
+        return True
+
+    else:
+        return False
 
 
+#print(match_with_gaps('m_vt','move'))
+#print(match_with_gaps('te_t','tact'))
+print(match_with_gaps('t_c_','tact'))
 
 def show_possible_matches(my_word):
     '''
@@ -310,14 +340,14 @@ def hangman_with_hints(secret_word):
 # Hint: You might want to pick your own secret_word while you're testing.
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
 
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
 
-    secret_word = choose_word(wordlist)
-    hangman('tact')
+    #secret_word = choose_word(wordlist)
+    #hangman(secret_word)
 
 ###############
 
@@ -325,4 +355,4 @@ if __name__ == "__main__":
     # uncomment the following two lines.
 
     #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    #hangman_with_hints('apple')
