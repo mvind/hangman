@@ -11,7 +11,6 @@
 # (so be sure to read the docstrings!)
 import random
 import string
-
 WORDLIST_FILENAME = "words.txt"
 
 
@@ -62,17 +61,17 @@ def is_word_guessed(secret_word, letters_guessed):
     '''
     mistake_found = False
     word_check = ''.join(set(str(secret_word)))
-    print word_check
-    for i in xrange(0,len(word_check)):
+    #print(word_check)
+    for i in range(0,len(word_check)):
         char = word_check[i]
-        print 'Checking: ' + char
+        #print('Checking: ' + char)
 
         for j in letters_guessed:
             if (str(char) == j):
-                print 'match', char
+                #print 'match', char
                 break
             else:
-                print 'Not a match'
+                #print 'Not a match'
                 if j == letters_guessed[len(letters_guessed)-1]:
                     mistake_found = True
                     break
@@ -81,10 +80,10 @@ def is_word_guessed(secret_word, letters_guessed):
                 #mistake_found = True
 
         if i == len(word_check)-1 and mistake_found == False:
-            print 'You have guessed the word correctly'
+            #print('You have guessed the word correctly')
             return True
         elif mistake_found == True:
-            print 'You havent guessed the word correctly'
+            #print('You havent guessed the word correctly')
             return False
         else:
             continue
@@ -105,11 +104,11 @@ def get_guessed_word(secret_word, letters_guessed):
     user_word = ''
     for i in secret_word:
 
-        print i
+        #print(i)
         for j in letters_guessed:
             if j == i:
                 user_word = user_word+j
-                print 'match', user_word
+                #print('match', user_word)
                 break
             else:
                 if j == letters_guessed[len(letters_guessed)-1]:
@@ -119,7 +118,7 @@ def get_guessed_word(secret_word, letters_guessed):
     return user_word
 
 
-#print get_guessed_word('apple',['g','n','l','e'])
+#print(get_guessed_word('apple',['g','n','l','e']))
 
 def get_available_letters(letters_guessed):
     '''
@@ -132,8 +131,8 @@ def get_available_letters(letters_guessed):
 
     for char in letters_guessed:
         alphabet.remove(char)
-    return alphabet
-print get_available_letters(['a','b','m'])
+    return ''.join(alphabet)
+#print(get_available_letters(['a','b','m']))
 
 
 def hangman(secret_word):
@@ -162,7 +161,57 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    print('Welcome to the game Hangman! \n')
+    print('I am thinking of a word that has ' + str(len(secret_word)), 'letters.')
+
+    warnings_left = 3
+    guesses_left = 6
+    letters_guessed = []
+
+    while guesses_left > 0:
+
+        check = False
+
+        print('\n---------------')
+        print('You have ' + str(guesses_left) + ' guesses left')
+        print('Available letters: ' + str(get_available_letters(letters_guessed)))
+
+        #Get input and check if its correct format
+        while not check:
+            guess = input("Please guess a letter: ").lower()
+            if guess.isalpha() and guess not in letters_guessed: #Correct input from user
+                check = True
+            elif warnings_left>0:
+                print('Please make sure to enter only one letter you havent prevoisly entered')
+                warnings_left -= 1
+                print('Warnings left before you lose a guess: ', warnings_left)
+
+                if warnings_left == 0:
+                    print('No warnings left, you\'ve lost a guess')
+                    guesses_left -= 1
+
+            elif warnings_left == 0:
+                print('No warnings left, you\'ve lost a guess')
+                guesses_left -= 1
+
+        #Add guess to list
+        letters_guessed.append(guess)
+        print('Secret word so far: ', get_guessed_word(secret_word, letters_guessed))
+
+        #Check if user has guessed the secret word
+        if is_word_guessed(secret_word,letters_guessed):
+            print('You have correctly guessed the word!')
+            print('Score: ', (guesses_left*len(''.join(set(secret_word)))))
+            break
+
+        print('---------------')
+        guesses_left -= 1
+    if guesses_left == 0:
+        print('You have run out of guesses, the secret word was', secret_word)
+
+
+
+
 
 
 
@@ -244,7 +293,7 @@ def hangman_with_hints(secret_word):
 
 
 if __name__ == "__main__":
-    # pass
+
 
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
