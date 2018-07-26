@@ -49,6 +49,11 @@ def choose_word(wordlist):
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
+def is_char_correct(secret_word, guess):
+    if guess in secret_word:
+        return True
+    else:
+        return False
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -88,7 +93,6 @@ def is_word_guessed(secret_word, letters_guessed):
         else:
             continue
 
-#print is_word_guessed('morten','netom')
 # print is_word_guessed('apple',['a','e','l','p'])
 # print ['a','e','l','p']
 
@@ -161,12 +165,13 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    print('Welcome to the game Hangman! \n')
-    print('I am thinking of a word that has ' + str(len(secret_word)), 'letters.')
-
     warnings_left = 3
     guesses_left = 6
     letters_guessed = []
+
+    print('Welcome to the game Hangman! \n')
+    print('I am thinking of a word that has ' + str(len(secret_word)), 'letters.')
+    print('You have ',warnings_left, 'warnings left')
 
     while guesses_left > 0:
 
@@ -196,6 +201,18 @@ def hangman(secret_word):
 
         #Add guess to list
         letters_guessed.append(guess)
+
+        if is_char_correct(secret_word, guess):
+            print('Correct!')
+        else:
+            print('Not correct!')
+
+            if guess in "bcdfghjklmnpqrstvwxyz":
+                guesses_left -= 1
+            elif guess in "aeiou":
+                guesses_left -= 2
+
+
         print('Secret word so far: ', get_guessed_word(secret_word, letters_guessed))
 
         #Check if user has guessed the secret word
@@ -205,8 +222,9 @@ def hangman(secret_word):
             break
 
         print('---------------')
-        guesses_left -= 1
-    if guesses_left == 0:
+
+
+    if guesses_left <= 0:
         print('You have run out of guesses, the secret word was', secret_word)
 
 
@@ -299,7 +317,7 @@ if __name__ == "__main__":
     # uncomment the following two lines.
 
     secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    hangman('tact')
 
 ###############
 
